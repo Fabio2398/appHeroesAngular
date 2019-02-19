@@ -38,6 +38,21 @@ export class HeroesComponent implements OnInit {
   }
 
 
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.heroService.addHero({ name } as Hero)
+      .subscribe(hero => {
+        this.heroes.push(hero);
+      });
+  }
+
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }
+
+
   /* QUESTA VERSIONE UTILIZZA DATI FAKE, CIOE' REPERIBILI IN MODO IMMEDIATO, 
   E CHE DAREBBE ERRORE 'FREEZ DELLA UI' PERCHE' IN ATTESA DEI DATI, 
   TEMPO DI ATTESA CHE NON SAREBBE GESTITO
